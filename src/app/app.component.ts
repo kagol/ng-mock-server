@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '@app/api.service';
+import { CardInterface } from './shared/types/card.interface';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    this.apiService.fetchCards().subscribe(cards => {
+    this.apiService.fetchCards().subscribe((cards: CardInterface) => {
       console.log('cards:', cards);
     });
   }
