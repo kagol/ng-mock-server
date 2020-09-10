@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '@env/environment';
 
-const API_PREFIX = 'http://localhost:9090';
+let apiPrefix = 'http://localhost:9090';
+
+if(environment.production) {
+  apiPrefix = 'http://backend-url';
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +18,7 @@ export class ApiService {
   ) { }
 
   fetchCards() {
-    return this.http.get(`${API_PREFIX}/cards`);
+    return this.http.get(`${apiPrefix}/cards`);
   }
 
 }

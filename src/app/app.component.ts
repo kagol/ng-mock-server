@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ApiService } from '@app/api.service';
-import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,6 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    console.log('environment:', environment);
     this.apiService.fetchCards().subscribe(cards => {
       console.log('cards:', cards);
     });
