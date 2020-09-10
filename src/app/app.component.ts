@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiService } from '@app/api.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-demo';
+
+  constructor(
+    private apiService: ApiService
+  ) {}
+
+  ngOnInit() {
+    console.log('environment:', environment);
+    this.apiService.fetchCards().subscribe(cards => {
+      console.log('cards:', cards);
+    });
+  }
 }
