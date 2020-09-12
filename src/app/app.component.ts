@@ -9,6 +9,7 @@ import { CardInterface } from './shared/types/card.interface';
 })
 export class AppComponent {
   title = 'ng-demo';
+  columns = [];
 
   constructor(
     private apiService: ApiService
@@ -17,6 +18,7 @@ export class AppComponent {
   ngOnInit() {
     this.apiService.fetchCards().subscribe((cards: CardInterface) => {
       console.log('cards:', cards);
+      this.columns = cards.result;
     });
   }
 }

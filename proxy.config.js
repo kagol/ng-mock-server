@@ -1,6 +1,6 @@
 const PROXY_CONFIG = {
-  '/api': {
-    target: 'http://localhost:9090'
+  '/v1': {
+    target: 'http://localhost:9090/v1'
   }
 };
 

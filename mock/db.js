@@ -1,77 +1,54 @@
 var Mock = require('mockjs');
 
 const CARDS = Mock.mock({
-  "error": null,
-  "status": "success",
-  "result": [{
-    "comment_count": "@integer(100, 999)",
-    "subject": '@title',
-    "dueDate": "@date",
-    "description": "@paragraph",
-    "is_parent": "@boolean",
-    "createdOn": "@date",
-    "assignedTo": "@name",
-    "updater": {
-      "name": "@name",
-      "id": "@guid",
-      "nick_name": "@name",
-      "domain_id": "@guid",
-      "domain_name": "@name",
-      "gender": "@string('lower', 4)"
-    },
-    "archived": "@boolean",
-    "card_type_id": "@integer(100, 999)",
-    "id": "@guid",
-    "author": {
-      "name": "@name",
-      "id": "@guid",
-      "nick_name": "@name",
-      "domain_id": "@guid",
-      "domain_name": "@name",
-      "gender": "@string('lower', 4)"
-    },
-    "column": {
-      "id": "@guid",
-      "name": "@name",
-      "parent_id": "@guid",
-      "type": "@string('upper', 5)",
-      "parent": {
-        "id": "@guid",
-        "name": "@name",
-        "type": "@string('upper', 5)",
-        "status_id": "@integer(100, 999)",
-        "description": "@paragraph",
-        "deleted": "@boolean"
-      },
-      "status_id": "@integer(100, 999)",
-      "description": "@paragraph",
-      "deleted": "@boolean"
-    },
-    "updatedOn": "@date",
-    "priority": "@cword",
-    "sequence": /\d{8}/,
-    "status_update_date": "@date",
-    "is_subscribed": "@boolean",
-    "position": {
-        "board": {
-          "id": "@guid",
-          "name": "@name",
-          "work_type": "@integer(100, 999)"
-        },
-        "column": {
-          "id": "@guid",
-          "name": "@name",
-          "parent_id": "@guid"
-        },
-        "lane": {
-          "id": "@guid",
-          "name": "@name"
-        },
-    },
-    "attachment_count": "@integer(100, 999)",
-    "has_description": "@boolean",
-    "startDate": "@date"
-  }]
+  "error": null,
+  "status": "success",
+  "result|10": [{
+    "column_id": "@guid",
+    "card_list|20": [{
+      "id": "@guid",
+      "subject": '@title',
+      "sequence": /\d{8}/,
+      "index": "@integer(1, 100)",
+      "archived": "@boolean",
+      "blocked": "@boolean",
+      "is_parent": "@boolean",
+      "createdOn": "@date",
+      "updatedOn": "@date",
+      "parent": {
+        "id": "@guid",
+        "name": "@cword(2,10)"
+      },
+      "board": { // 卡片所在的看板
+        "id": "@guid",
+        "name": "@cword(2,10)"
+      },
+      "column": { // 状态列
+        "id": "@guid",
+        "name": "@cword(2,10)",
+        "type": "@string('upper', 2, 20)",
+        "deleted": "@boolean"
+      },
+      "card_type": { // 卡片类型
+        "color": "@color",
+        "name": "@cword(2,10)",
+        "icon": /icon-[a-z]-{1-3}/,
+        "id": "@integer(1, 100)"
+      },
+      "updater": {
+        "name": "@name",
+        "id": "@guid",
+        "nick_name": "@name",
+        "gender": "@string('lower', 4)"
+      },
+      "author": {
+        "name": "@name",
+        "id": "@guid",
+        "nick_name": "@name",
+        "gender": "@string('lower', 4)"
+      },
+    }]
+  }]
 });
 
 const API = () => ({

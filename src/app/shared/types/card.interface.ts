@@ -14,71 +14,52 @@ export interface CardInterface {
 }
 
 export interface Result {
-    comment_count:      number;
-    subject:            string;
-    dueDate:            Date;
-    description:        string;
-    is_parent:          boolean;
-    createdOn:          Date;
-    assignedTo:         string;
-    updater:            Author;
-    archived:           boolean;
-    card_type_id:       number;
-    id:                 string;
-    author:             Author;
-    column:             ParentClass;
-    updatedOn:          Date;
-    priority:           string;
-    sequence:           string;
-    status_update_date: Date;
-    is_subscribed:      boolean;
-    position:           Position;
-    attachment_count:   number;
-    has_description:    boolean;
-    startDate:          Date;
+    column_id: string;
+    card_list: CardList[];
+}
+
+export interface CardList {
+    id:        string;
+    subject:   string;
+    sequence:  string;
+    index:     number;
+    archived:  boolean;
+    blocked:   boolean;
+    is_parent: boolean;
+    createdOn: Date;
+    updatedOn: Date;
+    parent:    Board;
+    board:     Board;
+    column:    Column;
+    card_type: CardType;
+    updater:   Author;
+    author:    Author;
 }
 
 export interface Author {
-    name:        string;
-    id:          string;
-    nick_name:   string;
-    domain_id:   string;
-    domain_name: string;
-    gender:      string;
-}
-
-export interface ParentClass {
-    id:          string;
-    name:        string;
-    parent_id?:  string;
-    type:        string;
-    parent?:     ParentClass;
-    status_id:   number;
-    description: string;
-    deleted:     boolean;
-}
-
-export interface Position {
-    board:  Board;
-    column: PositionColumn;
-    lane:   Lane;
+    name:      string;
+    id:        string;
+    nick_name: string;
+    gender:    string;
 }
 
 export interface Board {
-    id:        string;
-    name:      string;
-    work_type: number;
-}
-
-export interface PositionColumn {
-    id:        string;
-    name:      string;
-    parent_id: string;
-}
-
-export interface Lane {
     id:   string;
     name: string;
+}
+
+export interface CardType {
+    color: string;
+    name:  string;
+    icon:  string;
+    id:    number;
+}
+
+export interface Column {
+    id:      string;
+    name:    string;
+    type:    string;
+    deleted: boolean;
 }
 
 // Converts JSON strings to/from your types
@@ -232,64 +213,46 @@ const typeMap: any = {
         { json: "result", js: "result", typ: a(r("Result")) },
     ], false),
     "Result": o([
-        { json: "comment_count", js: "comment_count", typ: 0 },
+        { json: "column_id", js: "column_id", typ: "" },
+        { json: "card_list", js: "card_list", typ: a(r("CardList")) },
+    ], false),
+    "CardList": o([
+        { json: "id", js: "id", typ: "" },
         { json: "subject", js: "subject", typ: "" },
-        { json: "dueDate", js: "dueDate", typ: Date },
-        { json: "description", js: "description", typ: "" },
+        { json: "sequence", js: "sequence", typ: "" },
+        { json: "index", js: "index", typ: 0 },
+        { json: "archived", js: "archived", typ: true },
+        { json: "blocked", js: "blocked", typ: true },
         { json: "is_parent", js: "is_parent", typ: true },
         { json: "createdOn", js: "createdOn", typ: Date },
-        { json: "assignedTo", js: "assignedTo", typ: "" },
-        { json: "updater", js: "updater", typ: r("Author") },
-        { json: "archived", js: "archived", typ: true },
-        { json: "card_type_id", js: "card_type_id", typ: 0 },
-        { json: "id", js: "id", typ: "" },
-        { json: "author", js: "author", typ: r("Author") },
-        { json: "column", js: "column", typ: r("ParentClass") },
         { json: "updatedOn", js: "updatedOn", typ: Date },
-        { json: "priority", js: "priority", typ: "" },
-        { json: "sequence", js: "sequence", typ: "" },
-        { json: "status_update_date", js: "status_update_date", typ: Date },
-        { json: "is_subscribed", js: "is_subscribed", typ: true },
-        { json: "position", js: "position", typ: r("Position") },
-        { json: "attachment_count", js: "attachment_count", typ: 0 },
-        { json: "has_description", js: "has_description", typ: true },
-        { json: "startDate", js: "startDate", typ: Date },
+        { json: "parent", js: "parent", typ: r("Board") },
+        { json: "board", js: "board", typ: r("Board") },
+        { json: "column", js: "column", typ: r("Column") },
+        { json: "card_type", js: "card_type", typ: r("CardType") },
+        { json: "updater", js: "updater", typ: r("Author") },
+        { json: "author", js: "author", typ: r("Author") },
     ], false),
     "Author": o([
         { json: "name", js: "name", typ: "" },
         { json: "id", js: "id", typ: "" },
         { json: "nick_name", js: "nick_name", typ: "" },
-        { json: "domain_id", js: "domain_id", typ: "" },
-        { json: "domain_name", js: "domain_name", typ: "" },
         { json: "gender", js: "gender", typ: "" },
-    ], false),
-    "ParentClass": o([
-        { json: "id", js: "id", typ: "" },
-        { json: "name", js: "name", typ: "" },
-        { json: "parent_id", js: "parent_id", typ: u(undefined, "") },
-        { json: "type", js: "type", typ: "" },
-        { json: "parent", js: "parent", typ: u(undefined, r("ParentClass")) },
-        { json: "status_id", js: "status_id", typ: 0 },
-        { json: "description", js: "description", typ: "" },
-        { json: "deleted", js: "deleted", typ: true },
-    ], false),
-    "Position": o([
-        { json: "board", js: "board", typ: r("Board") },
-        { json: "column", js: "column", typ: r("PositionColumn") },
-        { json: "lane", js: "lane", typ: r("Lane") },
     ], false),
     "Board": o([
         { json: "id", js: "id", typ: "" },
         { json: "name", js: "name", typ: "" },
-        { json: "work_type", js: "work_type", typ: 0 },
     ], false),
-    "PositionColumn": o([
+    "CardType": o([
+        { json: "color", js: "color", typ: "" },
+        { json: "name", js: "name", typ: "" },
+        { json: "icon", js: "icon", typ: "" },
+        { json: "id", js: "id", typ: 0 },
+    ], false),
+    "Column": o([
         { json: "id", js: "id", typ: "" },
         { json: "name", js: "name", typ: "" },
-        { json: "parent_id", js: "parent_id", typ: "" },
-    ], false),
-    "Lane": o([
-        { json: "id", js: "id", typ: "" },
-        { json: "name", js: "name", typ: "" },
+        { json: "type", js: "type", typ: "" },
+        { json: "deleted", js: "deleted", typ: true },
     ], false),
 };

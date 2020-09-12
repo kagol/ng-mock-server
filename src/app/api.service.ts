@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@env/environment';
 
-let apiPrefix = 'http://localhost:9090';
-
-if(environment.production) {
-  apiPrefix = 'http://backend-url';
-}
+let apiPrefix = 'v1';
 
 @Injectable({
   providedIn: 'root'
